@@ -1,6 +1,7 @@
 package com.dqmj2.model;
 
 import java.awt.Component;
+import java.awt.Font;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -35,14 +36,14 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
         //         System.err.println("Error: could not find image for "+son);
         //     }
         // }
-        InputStream firstTry = Utils.streamFrom("/images/"+son+".webp");
+        InputStream firstTry = Utils.streamFrom("/images/"+son+".png");
         if (firstTry != null){
             try{
                 icon = new ImageIcon(ImageIO.read(firstTry));
             }catch(Exception e){}
         }
         else {
-            InputStream secondTry = Utils.streamFrom("/images/"+removeLvFrom(son)+".webp");
+            InputStream secondTry = Utils.streamFrom("/images/"+removeLvFrom(son)+".png");
             if (secondTry != null){
                 try {
                     icon = new ImageIcon(ImageIO.read(secondTry));
@@ -67,6 +68,8 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
             label.setIcon(computeIcon((String)(userObject)));
             label.setText((String) userObject);
         }
+        Font font = new Font("Arial", Font.CENTER_BASELINE, Utils.FONT_SIZE);
+        label.setFont(font);
         return label;
     }
     

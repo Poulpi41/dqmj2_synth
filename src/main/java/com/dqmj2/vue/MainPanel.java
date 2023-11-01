@@ -4,11 +4,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.text.Utilities;
 
 import com.dqmj2.controller.Controller;
+import com.dqmj2.model.Utils;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,7 +35,7 @@ public class MainPanel extends JPanel{
     public MainPanel(String[] choices,Controller control){
         super();
         
-        Font font = new Font("Arial", Font.CENTER_BASELINE, 25);
+        Font font = new Font("Arial", Font.CENTER_BASELINE, Utils.FONT_SIZE);
         JLabel label = new JLabel("choose a monster:");
         label.setFont(font);
         JComboBox<String> comboBox = new JComboBox<String>(choices);

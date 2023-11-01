@@ -11,6 +11,7 @@ import javax.swing.JTree;
 import com.dqmj2.controller.Controller;
 import com.dqmj2.model.FamilyTree;
 import com.dqmj2.model.MonsterNodeRenderer;
+import com.dqmj2.model.Utils;
 
 public class TemplateTreeSynthesis extends JPanel{
     private class GoBackListener implements ActionListener{
@@ -24,7 +25,7 @@ public class TemplateTreeSynthesis extends JPanel{
     }
     public TemplateTreeSynthesis(FamilyTree tree,Controller c){
         super();
-        Font font = new Font("Arial", Font.CENTER_BASELINE, 25);
+        Font font = new Font("Arial", Font.CENTER_BASELINE, Utils.FONT_SIZE);
         JTree jtree = new JTree(tree);
         jtree.setFont(font);
         jtree.setCellRenderer(new MonsterNodeRenderer());
