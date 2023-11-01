@@ -1,0 +1,12 @@
+@startuml dataBaseScheme
+entity "Monster" {
+    *name : String
+    --
+    *imagePath : String
+}
+entity "Relation" {}
+
+Monster "1" --{ "*" Relation
+Relation "1" --{ "2..4" Monster
+
+@enduml
