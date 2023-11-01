@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import com.dqmj2.controller.Controller;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -32,33 +34,28 @@ public class MainPanel extends JPanel{
     }
     public MainPanel(String[] choices,Controller control){
         super();
-        BorderLayout generalLayout = new BorderLayout();
-        this.setLayout(generalLayout);
         
+        Font font = new Font("Arial", Font.CENTER_BASELINE, 25);
         JLabel label = new JLabel("choose a monster:");
-        label.setSize(100,100);
+        label.setFont(font);
         JComboBox<String> comboBox = new JComboBox<String>(choices);
-        comboBox.setSize(100,100);
+        comboBox.setFont(font);
         JComboBox<Integer> comboBox2 = new JComboBox<Integer>(new Integer[]{
             1,2,3,4,5,6,7,8,9,10,
             11,12,13,14,15,16,17,18,19,20,
             21,22,23,24,25,26,27,28,29,30,
             31,32
         });
-        comboBox2.setSize(100,100);
+        comboBox2.setFont(font);
         JButton button = new JButton("launch research");
-        button.setSize(100,100);
-
+        button.setFont(font);
         SearchLanuncher sl = new SearchLanuncher(control,comboBox,comboBox2);
         button.addActionListener(sl);
 
-        JPanel subPanel = new JPanel();
+        this.add(label);
+        this.add(comboBox);
+        this.add(comboBox2);
+        this.add(button);
 
-        subPanel.add(label);
-        subPanel.add(comboBox);
-        subPanel.add(comboBox2);
-        subPanel.add(button);
-
-        this.add(subPanel,BorderLayout.CENTER);
     }
 }
