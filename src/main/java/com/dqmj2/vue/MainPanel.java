@@ -4,7 +4,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.text.Utilities;
 
 import com.dqmj2.controller.Controller;
 import com.dqmj2.model.Utils;
@@ -56,6 +55,5 @@ public class MainPanel extends JPanel{
         this.add(comboBox);
         this.add(comboBox2);
         this.add(button);
-
     }
 }

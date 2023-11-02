@@ -1,4 +1,4 @@
-package com.dqmj2.model;
+package com.dqmj2.vue;
 
 import java.awt.Component;
 import java.awt.Font;
@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
+
+import com.dqmj2.model.Utils;
 
 public class MonsterNodeRenderer implements TreeCellRenderer{
     
@@ -25,25 +27,14 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
     }
     private static ImageIcon computeIcon(String son){
         ImageIcon icon = null;
-        // try {
-        //     icon = new ImageIcon("src/main/resources/images/"+son+".webp");
-        // }
-        // catch (Exception e){
-        //     try {
-        //         icon = new ImageIcon("src/main/resources/images/"+removeLvFrom(son)+".webp");
-        //     }
-        //     catch (Exception e2){
-        //         System.err.println("Error: could not find image for "+son);
-        //     }
-        // }
-        InputStream firstTry = Utils.streamFrom("/images/"+son+".png");
+        InputStream firstTry = Utils.streamFrom("/imagesx2/"+son+".png");
         if (firstTry != null){
             try{
                 icon = new ImageIcon(ImageIO.read(firstTry));
             }catch(Exception e){}
         }
         else {
-            InputStream secondTry = Utils.streamFrom("/images/"+removeLvFrom(son)+".png");
+            InputStream secondTry = Utils.streamFrom("/imagesx2/"+removeLvFrom(son)+".png");
             if (secondTry != null){
                 try {
                     icon = new ImageIcon(ImageIO.read(secondTry));
@@ -64,7 +55,6 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
         Object userObject = ((DefaultMutableTreeNode) value).getUserObject();
 
         if (userObject instanceof String) {
-            //InputStream imgStream = getClass().getResourceAsStream("/images/" + (String)(userObject) + ".webp");
             label.setIcon(computeIcon((String)(userObject)));
             label.setText((String) userObject);
         }

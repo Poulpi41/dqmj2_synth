@@ -10,7 +10,6 @@ import javax.swing.JTree;
 
 import com.dqmj2.controller.Controller;
 import com.dqmj2.model.FamilyTree;
-import com.dqmj2.model.MonsterNodeRenderer;
 import com.dqmj2.model.Utils;
 
 public class TemplateTreeSynthesis extends JPanel{
@@ -32,6 +31,7 @@ public class TemplateTreeSynthesis extends JPanel{
         JButton button = new JButton("Back");
         button.setFont(font);
         button.addActionListener(new GoBackListener(c));
+
         this.add(jtree);
         this.add(button);
     }

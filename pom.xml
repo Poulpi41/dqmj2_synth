@@ -32,7 +32,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.dqmj2.Main</mainClass>
+							<mainClass>com.dqmj2.model.DataBaseSandBox</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -56,13 +56,20 @@
 
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>2.2.224</version>
-			<scope>test</scope>
-		</dependency> -->
+			<!-- <scope>test</scope> -->
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.webswing/webswing
+		<dependency>
+		    <groupId>org.webswing</groupId>
+		    <artifactId>webswing</artifactId>
+		    <version>20.2.4</version>
+		    <type>pom</type>
+		</dependency> -->
 
 		<dependency>
 			<groupId>org.json</groupId>

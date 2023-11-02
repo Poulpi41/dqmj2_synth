@@ -2,6 +2,7 @@ package com.dqmj2.controller;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 
 import org.json.JSONArray;
 
@@ -12,7 +13,6 @@ import com.dqmj2.vue.TemplateTreeSynthesis;
 
 public class Controller {
     JFrame  frame;
-    JPanel  currentPanel;
     Model   model;
     public Controller(){
         this.frame = new JFrame();
@@ -37,8 +37,14 @@ public class Controller {
     }
     public void launchSearch(int depth,String name){
         FamilyTree tree = computeFamilyTree(depth,name);
-        currentPanel = new TemplateTreeSynthesis(tree,this);
-        frame.setContentPane(currentPanel);
+        JPanel jp = new TemplateTreeSynthesis(tree,this);
+        JScrollPane tmp = new JScrollPane(jp);
+        tmp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        tmp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        tmp.getVerticalScrollBar().setUnitIncrement(16);
+        tmp.getHorizontalScrollBar().setUnitIncrement(16);
+
+        frame.setContentPane(tmp);
         frame.pack();
         frame.setVisible(true);
     }
