@@ -32,7 +32,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.dqmj2.model.DataBaseSandBox</mainClass>
+							<mainClass>com.dqmj2.model.db.MainDB</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>

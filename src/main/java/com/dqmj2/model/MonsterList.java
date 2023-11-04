@@ -8,10 +8,10 @@ import org.json.JSONArray;
 import org.json.JSONTokener;
 
 public class MonsterList extends JSONArray{    
-    MonsterList(String path){
+    public MonsterList(String path){
         this(Utils.streamFrom(path));
     }
-    MonsterList(InputStream is){
+    public MonsterList(InputStream is){
         super(new JSONTokener(is));
     }
     public List<String> getNames(){
