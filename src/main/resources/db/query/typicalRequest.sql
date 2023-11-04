@@ -8,7 +8,8 @@ select son_name,
     mc1.level_monster1 as level1,
     mc1.level_monster2 as level2,
     c2.level_monster1 as level3,
-    c2.level_monster2 as level4
+    c2.level_monster2 as level4,
+    synthesis.number_of_parents
 from synthesis
 join monster_couple mc1 on mc1.id_couple = synthesis.ID_FIRST_COUPLE
 join synth_property on synthesis.id_property=synth_property.id_property

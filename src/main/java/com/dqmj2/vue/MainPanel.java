@@ -4,6 +4,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
 
 import com.dqmj2.controller.Controller;
 import com.dqmj2.model.Utils;
@@ -16,20 +18,18 @@ public class MainPanel extends JPanel{
     private class SearchLanuncher implements ActionListener {
         private Controller c;
         private JComboBox<String> nameChoice;
-        private JComboBox<Integer> depthChoice;
-        public SearchLanuncher(Controller c,JComboBox<String> name,JComboBox<Integer> depth){
+        private JSpinner depthChoice;
+        public SearchLanuncher(Controller c,JComboBox<String> name,JSpinner depth){
             this.c = c;
             this.depthChoice = depth;
             this.nameChoice = name;
         }
         @Override
         public void actionPerformed(ActionEvent arg0) {
-            int depth = (Integer)depthChoice.getSelectedItem();
+            int depth = (Integer)depthChoice.getValue();
             String name = (String)nameChoice.getSelectedItem();
             c.launchSearch(depth,name);
         }
-        
-        
     }
     public MainPanel(String[] choices,Controller control){
         super();
@@ -39,21 +39,28 @@ public class MainPanel extends JPanel{
         label.setFont(font);
         JComboBox<String> comboBox = new JComboBox<String>(choices);
         comboBox.setFont(font);
-        JComboBox<Integer> comboBox2 = new JComboBox<Integer>(new Integer[]{
-            1,2,3,4,5,6,7,8,9,10,
-            11,12,13,14,15,16,17,18,19,20,
-            21,22,23,24,25,26,27,28,29,30,
-            31,32
-        });
-        comboBox2.setFont(font);
+        JSpinner spinner = new JSpinner();
+        SpinnerNumberModel spinmod;
+        Integer current = 2;
+        Integer min = 1;
+        Integer max = 128;
+        Integer step = 1;
+        spinmod = new SpinnerNumberModel(current,min,max,step);
+        spinner.setModel(spinmod);
+        spinner.setFont(font);
+        JLabel label2 = new JLabel("choose the depth of the search:");
+        label2.setFont(font);
+
+        
         JButton button = new JButton("launch research");
         button.setFont(font);
-        SearchLanuncher sl = new SearchLanuncher(control,comboBox,comboBox2);
+        SearchLanuncher sl = new SearchLanuncher(control,comboBox,spinner);
         button.addActionListener(sl);
 
         this.add(label);
         this.add(comboBox);
-        this.add(comboBox2);
+        this.add(label2);
+        this.add(spinner);
         this.add(button);
     }
 }

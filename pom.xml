@@ -32,7 +32,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>com.dqmj2.model.db.MainDB</mainClass>
+							<mainClass>com.dqmj2.Main</mainClass>
 						</manifest>
 					</archive>
 					<descriptorRefs>
@@ -71,10 +71,10 @@
 		    <type>pom</type>
 		</dependency> -->
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20231013</version>
-		</dependency>
+		</dependency> -->
 	</dependencies>
 </project>

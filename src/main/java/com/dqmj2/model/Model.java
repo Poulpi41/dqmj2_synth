@@ -1,33 +1,51 @@
 package com.dqmj2.model;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONTokener;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.dqmj2.model.db.DB_Utils;
 
 public class Model {
-    private JSONArray monsterNames;
-    private JSONObject parentSonRelationship;
-    private String[] forComboBox;
+    Connection conn;
+    String[] choices;
+
     public Model(){
-        monsterNames = new JSONArray(new JSONTokener(Utils.streamFrom("/json/monster_list.json")));
-        forComboBox = monsterNames.toList().toArray(new String[0]);
-        parentSonRelationship = new JSONObject(new JSONTokener(Utils.streamFrom("/json/parentSonDataBase.json")));
+        turnOnDataBase();
+        choices = DB_Utils.getMonsterNames(conn);
     }
-    public String[] getMonsterNames(){
-        return forComboBox;
+
+    public String[] getMonsterNames() {
+        return choices;
     }
-    public JSONArray getListParentsFor(String name,int index){
-        JSONArray tmp = parentSonRelationship.getJSONArray(name);
-        if (tmp.length() < 1) {
-            return new JSONArray();
+    public void turnOnDataBase() {
+        conn = DB_Utils.getConnection("/db/compact/synthesis.mv.db");
+        //conn = DB_Utils.getConnectionDebug();
+    }
+    public void turnOffDataBase() {
+        try { conn.close(); } catch (SQLException e) {}
+    }
+    public List<TableInfos> getSynthesisFor(String name) {
+        return DB_Utils.getSynthesisFor(conn,name);
+    }
+    public TableInfos getFirstSynthesisFor(String name) {
+        return DB_Utils.getFirstSynthesisFor(conn,name);
+    }
+    private FamilyTree recFamilyTreeFor(String name,String level,int depth) {
+        if (depth <= 0) {
+            return new FamilyTree(new MonsterEntity(name, level));
         }
-        if (index >= tmp.length()) {
-            return new JSONArray();
+        TableInfos ti = getFirstSynthesisFor(name);
+        if (ti == null) {
+            return new FamilyTree(new MonsterEntity(name, level));
         }
-        JSONObject choices = tmp.getJSONObject(index);
-        return choices.getJSONArray("parents");
+        FamilyTree res = new FamilyTree(new MonsterEntity(name, level));
+        for (int i = 0; i < ti.number_of_parents; i++) {
+            res.add(recFamilyTreeFor(ti.father_names.get(i),ti.father_levels.get(i),depth-1));
+        }
+        return res;
     }
-    public JSONArray getListParentsFor(String name){
-        return getListParentsFor(name,0);
+    public FamilyTree getFamilyTreeFor(String name,int depth) {
+        return recFamilyTreeFor(name,"",depth);
     }
 }
