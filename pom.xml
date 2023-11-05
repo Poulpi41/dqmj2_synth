@@ -17,6 +17,7 @@
 
     <build>
 		<plugins>
+
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -27,6 +28,7 @@
 					<compilerArgument>-proc:none</compilerArgument>
 				</configuration>
 			</plugin>
+
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<configuration>
@@ -38,6 +40,7 @@
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
 					</descriptorRefs>
+					<filename>synth_tree.jar</filename>
 				</configuration>
 				<executions>
 					<execution>
@@ -71,10 +74,10 @@
 		    <type>pom</type>
 		</dependency> -->
 
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20231013</version>
-		</dependency> -->
+		</dependency>
 	</dependencies>
 </project>

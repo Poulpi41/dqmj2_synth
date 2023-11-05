@@ -19,7 +19,7 @@ public class Model {
         return choices;
     }
     public void turnOnDataBase() {
-        conn = DB_Utils.getConnection("/db/compact/synthesis.mv.db");
+        conn = DB_Utils.getConnection("./db/synthesis");
         //conn = DB_Utils.getConnectionDebug();
     }
     public void turnOffDataBase() {

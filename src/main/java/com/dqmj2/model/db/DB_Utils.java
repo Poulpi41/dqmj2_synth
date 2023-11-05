@@ -1,7 +1,6 @@
 package com.dqmj2.model.db;
 
-import java.net.URL;
-import java.sql.Array;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -9,8 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dqmj2.model.db.maintenancae.MainDB;
 import com.dqmj2.model.TableInfos;
+import com.dqmj2.model.db.maintenance.DB_dataBaseCreation;
 
 public class DB_Utils {
     /**
@@ -19,12 +18,26 @@ public class DB_Utils {
      * @return a connection to the database null if connection failed
      */
     public static Connection getConnection(String filePath) {
-        URL url = MainDB.class.getResource(filePath);
-        String path = url.getPath();
-        path = path.substring(path.indexOf("/"), path.indexOf(".mv.db"));
-        System.out.println(path);
+        // URL url = MainDB.class.getResource(filePath);
+        // String path = url.getPath();
+        // path = path.substring(path.indexOf("/"), path.indexOf(".mv.db"));
+        // System.out.println(path);
+        // try {
+        //     Connection conn = DriverManager.getConnection("jdbc:h2:zip:"+path+";ACCESS_MODE_DATA=r", "sa", "");
+        //     return conn;
+        // } catch (SQLException e) {
+        //     System.err.println("Error: could not connect to the database");
+        //     return null;
+        // }
+        File f = new File(filePath+".mv.db");
+        f= f.getAbsoluteFile();
+        if (!f.exists()) {
+            try {
+                DB_dataBaseCreation.createDB(filePath);
+            } catch (SQLException e) {}
+        }
         try {
-            Connection conn = DriverManager.getConnection("jdbc:h2:zip:"+path, "sa", "");
+            Connection conn = DriverManager.getConnection("jdbc:h2:"+filePath, "sa", "");
             return conn;
         } catch (SQLException e) {
             System.err.println("Error: could not connect to the database");
