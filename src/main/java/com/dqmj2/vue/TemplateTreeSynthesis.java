@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTree;
 
@@ -13,6 +14,7 @@ import com.dqmj2.model.FamilyTree;
 import com.dqmj2.model.Utils;
 
 public class TemplateTreeSynthesis extends JPanel{
+    
     private class GoBackListener implements ActionListener{
         Controller controller;
         public GoBackListener(Controller controller){
@@ -28,6 +30,9 @@ public class TemplateTreeSynthesis extends JPanel{
         JTree jtree = new JTree(tree);
         jtree.setFont(font);
         jtree.setCellRenderer(new MonsterNodeRenderer());
+        // for (int i = 0; i < jtree.getRowCount(); i++) {
+        //     jtree.expandRow(i);
+        // }
         JButton button = new JButton("Back");
         button.setFont(font);
         button.addActionListener(new GoBackListener(c));

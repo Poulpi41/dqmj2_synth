@@ -1,0 +1,45 @@
+@startuml dataBaseDiagram
+skinparam Linetype ortho
+entity monster{
+    *name : string
+}
+entity synth{
+    *id_synth : int
+    --
+    *prop_rank : string 
+    *prop_synth_type : string 
+    *son_name : string
+}
+entity parent_list{
+    *id_pl : int
+    *parent_name1 : string
+    *parent_name2 : string
+    parent_name3 : string
+    parent_name4 : string
+}
+entity synth_monster{
+    *parent_name : string 
+    level : string
+}
+entity synth_prop{
+    *prop_value : int
+    *rank : string 
+    *synth_type : string 
+}
+entity pl_s{
+    *id_pl : string
+    *id_synth : string
+}
+
+monster "1"--"1" synth
+
+synth "1"--"1" synth_prop
+
+parent_list "2..4"--"1" synth_monster
+
+synth_monster "1"--"1" monster
+
+parent_list "1"--"*" pl_s
+synth "1"--"*" pl_s
+
+@enduml

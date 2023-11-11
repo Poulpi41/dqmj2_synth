@@ -1,6 +1,8 @@
 package com.dqmj2.controller;
 
 
+import java.util.List;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -9,7 +11,9 @@ import javax.swing.JScrollPane;
 
 import com.dqmj2.model.FamilyTree;
 import com.dqmj2.model.Model;
+import com.dqmj2.model.TableInfos;
 import com.dqmj2.vue.MainPanel;
+import com.dqmj2.vue.SynthListPanel;
 import com.dqmj2.vue.TemplateTreeSynthesis;
 
 public class Controller {
@@ -56,6 +60,20 @@ public class Controller {
         String[] choices = model.getMonsterNames();
         MainPanel mp = new MainPanel(choices,this);
         frame.setContentPane(mp);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    
+    public void print100SynthsFor(String name){
+        List<TableInfos> synths = model.get100FirstSynthesis(name);
+        SynthListPanel slp = new SynthListPanel(name,synths,this);
+        JScrollPane tmp = new JScrollPane(slp);
+        tmp.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        tmp.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        tmp.getVerticalScrollBar().setUnitIncrement(16);
+        tmp.getHorizontalScrollBar().setUnitIncrement(16);
+
+        frame.setContentPane(tmp);
         frame.pack();
         frame.setVisible(true);
     }

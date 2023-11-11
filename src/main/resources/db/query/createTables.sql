@@ -1,42 +1,54 @@
-CREATE TABLE MONSTER
-(
-    name VARCHAR(255) NOT NULL,
-    PRIMARY KEY (name)
+create table monster(
+    name varchar(127) not null,
+    primary key (name)
+);
+create table synth_prop(
+    prop_val int not null,
+    rank varchar(63) not null,
+    synth_type varchar(63) not null,
+    primary key (prop_val),
+    unique nulls not distinct (prop_val, rank, synth_type)
+);
+create table synth_monster(
+    parent_name varchar(127) not null,
+    lvl varchar(15),
+    primary key (parent_name, lvl),
+    foreign key (parent_name) references monster(name),
+    unique nulls not distinct (parent_name, lvl)
+);
+create table synth(
+    id_s int not null auto_increment,
+    son_name varchar(127) not null,
+    id_pr int not null,
+    primary key (id_s),
+    foreign key (son_name) references monster(name),
+    foreign key (id_pr) references synth_prop(prop_val),
+    unique nulls not distinct (son_name, id_pr)
+);
+create table parent_list(
+    id_pl int not null auto_increment,
+    
+    p1 varchar(127) not null,
+    p2 varchar(127) not null,
+    p3 varchar(127),
+    p4 varchar(127),
+    lv1 varchar(15),
+    lv2 varchar(15),
+    lv3 varchar(15),
+    lv4 varchar(15),
+    primary key (id_pl),
+    foreign key (p1,lv1) references synth_monster(parent_name,lvl),
+    foreign key (p2,lv2) references synth_monster(parent_name,lvl),
+    foreign key (p3,lv3) references synth_monster(parent_name,lvl),
+    foreign key (p4,lv4) references synth_monster(parent_name,lvl),
+    unique nulls not distinct (p1,p2,p3,p4,lv1,lv2,lv3,lv4)
 );
 
-CREATE TABLE MONSTER_COUPLE
-(
-    id_couple INTEGER AUTO_INCREMENT,
-    name_monster1 VARCHAR(255) NOT NULL,
-    name_monster2 VARCHAR(255) NOT NULL,
-    level_monster1 VARCHAR(9),
-    level_monster2 VARCHAR(9),
-    FOREIGN KEY (name_monster1) REFERENCES MONSTER(name),
-    FOREIGN KEY (name_monster2) REFERENCES MONSTER(name),
-    PRIMARY KEY (id_couple),
-    UNIQUE( name_monster1, name_monster2, level_monster1, level_monster2)
-);
-
-CREATE TABLE SYNTH_PROPERTY
-(
-    id_property INTEGER AUTO_INCREMENT,
-    rank_type VARCHAR(255) NOT NULL,
-    synth_type VARCHAR(255) NOT NULL,
-    prop_value INTEGER NOT NULL,
-    PRIMARY KEY (id_property)
-);
-
-CREATE TABLE SYNTHESIS
-(
-    id_synth INTEGER AUTO_INCREMENT,
-    son_name VARCHAR(255) NOT NULL,
-    id_property INTEGER NOT NULL,
-    number_of_parents INTEGER NOT NULL,
-    id_first_couple INTEGER NOT NULL,
-    id_second_couple INTEGER,
-    FOREIGN KEY (son_name) REFERENCES MONSTER(name),
-    FOREIGN KEY (id_property) REFERENCES SYNTH_PROPERTY(id_property),
-    FOREIGN KEY (id_first_couple) REFERENCES MONSTER_COUPLE(id_couple),
-    FOREIGN KEY (id_second_couple) REFERENCES MONSTER_COUPLE(id_couple),
-    PRIMARY KEY (id_synth)
+create table pl_s(
+    id_s int not null,
+    id_pl int not null,
+    primary key (id_pl, id_s),
+    foreign key (id_pl) references parent_list(id_pl),
+    foreign key (id_s) references synth(id_s),
+    unique nulls not distinct (id_pl, id_s)
 );

@@ -30,7 +30,7 @@ public class DB_Query {
         sb.append("join synth_property on synthesis.id_property=synth_property.id_property\n");
         sb.append("left outer join monster_couple c2 on c2.id_couple = synthesis.ID_SECOND_COUPLE\n");
         sb.append("where son_name = '"+name+"'\n");
-        sb.append("order by (synth_property.prop_value) desc \n");
+        //sb.append("order by (synth_property.prop_value) desc \n");
         return  sb.toString();
     }
 

@@ -48,4 +48,10 @@ public class Model {
     public FamilyTree getFamilyTreeFor(String name,int depth) {
         return recFamilyTreeFor(name,"",depth);
     }
+    public List<TableInfos> getNfirstSynthesisFor(String name,int n) {
+        return DB_Utils.getSynthesisFor(conn,name,n);
+    }
+    public List<TableInfos> get100FirstSynthesis(String name) {
+        return getNfirstSynthesisFor(name,100);
+    }
 }

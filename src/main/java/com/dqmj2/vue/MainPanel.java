@@ -11,10 +11,24 @@ import com.dqmj2.controller.Controller;
 import com.dqmj2.model.Utils;
 
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class MainPanel extends JPanel{
+    private class PrintSynthListener implements ActionListener{
+        Controller controller;
+        JComboBox<String> comboBox;
+        PrintSynthListener(Controller controller,JComboBox<String> comboBox){
+            this.controller = controller;
+            this.comboBox = comboBox;
+        }
+        @Override
+        public void actionPerformed(ActionEvent arg0) {
+            controller.print100SynthsFor((String)comboBox.getSelectedItem());
+        }
+
+    }
     private class SearchLanuncher implements ActionListener {
         private Controller c;
         private JComboBox<String> nameChoice;
@@ -57,10 +71,26 @@ public class MainPanel extends JPanel{
         SearchLanuncher sl = new SearchLanuncher(control,comboBox,spinner);
         button.addActionListener(sl);
 
-        this.add(label);
-        this.add(comboBox);
-        this.add(label2);
-        this.add(spinner);
-        this.add(button);
+        JPanel line1 = new JPanel();
+        line1.setLayout(new java.awt.FlowLayout());
+
+        line1.add(label);
+        line1.add(comboBox);
+        line1.add(label2);
+        line1.add(spinner);
+        line1.add(button);
+
+
+        JPanel line2 = new JPanel();
+        line2.setLayout(new java.awt.FlowLayout());
+        JButton button2 = new JButton("print 100 first synths for this monster");
+        button2.setFont(font);
+        PrintSynthListener psl = new PrintSynthListener(control,comboBox);
+        button2.addActionListener(psl);
+        line2.add(button2);
+
+        this.setLayout(new GridLayout(2,1));
+        this.add(line1);
+        this.add(line2);
     }
 }

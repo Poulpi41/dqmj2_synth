@@ -7,7 +7,9 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeCellRenderer;
@@ -48,24 +50,7 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
     //     return icon;
     // }
 
-    /**
-     * get the icon for the given name
-     * @param name the name of the icon
-     * @return the icon for the given name
-     */
-    private static ImageIcon getIcon(String name){
-        ImageIcon icon = null;
-        InputStream stream = Utils.streamFrom("/imagesx2/"+Utils.convertForImage(name)+".png");
-        if (stream != null){
-            try {
-                icon = new ImageIcon(ImageIO.read(stream));
-            } catch (IOException e) {}
-        }
-        else {
-            System.err.println("Error: could not find image for "+name);
-        }
-        return icon;
-    }
+    
     @Override
     public Component getTreeCellRendererComponent(
             JTree arg0,
@@ -82,7 +67,7 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
 
         if (userObject instanceof MonsterEntity) {
             MonsterEntity monster = (MonsterEntity) userObject;
-            label.setIcon(getIcon(monster.getName()));
+            label.setIcon(Utils.getIcon(monster.getName()));
             label.setText(monster.toString());
         }
 
@@ -92,7 +77,13 @@ public class MonsterNodeRenderer implements TreeCellRenderer{
         // }
         Font font = new Font("Arial", Font.CENTER_BASELINE, Utils.FONT_SIZE);
         label.setFont(font);
-        return label;
+        JButton button = new JButton("change");
+        button.setFont(font);
+        JLayeredPane both = new JLayeredPane();
+        both.setLayout(new java.awt.FlowLayout());
+        both.add(label);
+        both.add(button);
+        return both;
     }
     
 }
