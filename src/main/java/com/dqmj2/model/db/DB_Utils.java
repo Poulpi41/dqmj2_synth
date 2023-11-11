@@ -100,14 +100,14 @@ public class DB_Utils {
                 for (int j = 8; j < 12; j++) {
                     fathersLevel.add(rs.getString(j));
                 }
-                res.add(new TableInfos(
+                TableInfos tmp =new TableInfos(
                     rs.getString(1), 
                     fathersName,
                     rs.getString(6), 
                     rs.getString(7),
-                    fathersLevel, 
-                    rs.getInt(12)
-                ));
+                    fathersLevel
+                );
+                res.add(tmp);
             }
             return res;
         } catch (SQLException e) {

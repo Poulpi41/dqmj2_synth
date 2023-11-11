@@ -21,13 +21,18 @@ public class TableInfos {
      * @param synth_type the type of the synthesis
      * @param rank_type the rank constaint of the synthesis
      */
-    public TableInfos(String son_name, List<String> father_names, String synth_type, String rank_type, List<String> father_levels, int number_of_parents) {
+    public TableInfos(String son_name, List<String> father_names, String synth_type, String rank_type, List<String> father_levels) {
         this.son_name = son_name;
         this.father_names = father_names;
         this.father_levels = father_levels;
-        this.number_of_parents = number_of_parents;
         this.synth_type = synth_type;
         this.rank_type = rank_type;
+        this.number_of_parents = 0;
+        for (String string : father_names) {
+            if (string != null) {
+                this.number_of_parents++;
+            }
+        }
     }
 
 }

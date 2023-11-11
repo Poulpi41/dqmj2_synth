@@ -10,27 +10,26 @@ public class DB_Query {
      */
     public static String getResFor(String name,int number_of_results) {
         StringBuilder sb = new StringBuilder();
+        /*
+            select son_name as son,p1,p2,p3,p4,lv1,lv2,lv3,lv4,synth_type,rank
+            from synth
+            join SYNTH_PROP on SYNTH_PROP.prop_val = synth.id_pr
+            join pl_s on pl_s.id_s = synth.id_s
+            join PARENT_LIST on PARENT_LIST.ID_PL = pl_s.id_pl
+            where son_name = 'abyss diver'
+            order by prop_val desc
+        */
         if (number_of_results<=0)
             sb.append("select son_name,");
         else
             sb.append("select top "+number_of_results+" son_name,");
-                sb.append("mc1.name_monster1 as parent1,");
-                sb.append("mc1.name_monster2 as parent2,");
-                sb.append("c2.name_monster1 as parent3,");
-                sb.append("c2.name_monster2 as parent4,");
-                sb.append("synth_property.synth_type,");
-                sb.append("synth_property.rank_type,");
-                sb.append("mc1.level_monster1 as level1,");
-                sb.append("mc1.level_monster2 as level2,");
-                sb.append("c2.level_monster1 as level3,");
-                sb.append("c2.level_monster2 as level4,");
-                sb.append("synthesis.number_of_parents\n");
-        sb.append("from synthesis\n");
-        sb.append("join monster_couple mc1 on mc1.id_couple = synthesis.ID_FIRST_COUPLE\n");
-        sb.append("join synth_property on synthesis.id_property=synth_property.id_property\n");
-        sb.append("left outer join monster_couple c2 on c2.id_couple = synthesis.ID_SECOND_COUPLE\n");
+        sb.append("p1,p2,p3,p4,synth_type,rank,lv1,lv2,lv3,lv4\n");
+        sb.append("from synth\n");
+        sb.append("join SYNTH_PROP on SYNTH_PROP.prop_val = synth.id_pr\n");
+        sb.append("join pl_s on pl_s.id_s = synth.id_s\n");
+        sb.append("join PARENT_LIST on PARENT_LIST.ID_PL = pl_s.id_pl\n");
         sb.append("where son_name = '"+name+"'\n");
-        //sb.append("order by (synth_property.prop_value) desc \n");
+        sb.append("order by prop_val desc");
         return  sb.toString();
     }
 
