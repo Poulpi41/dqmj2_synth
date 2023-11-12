@@ -13,6 +13,6 @@ public class MonsterEntity {
     }
     @Override
     public String toString() {
-        return ""+name+level;
+        return ""+name+(level==null?"":" "+level);
     }
 }

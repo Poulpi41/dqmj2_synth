@@ -24,7 +24,7 @@ public class DB_dataBaseCreation {
             try {
                 c
                 .createStatement()
-                .executeUpdate(
+                .execute(
                     "INSERT INTO MONSTER (NAME) VALUES ('"+string+"')"
                 );
             } catch (SQLException e) {
@@ -51,7 +51,7 @@ public class DB_dataBaseCreation {
     }
     public static void insertNullSynthMonster(Connection c){
         try {
-            c.createStatement().executeUpdate("INSERT INTO SYNTH_MONSTER (parent_name,lvl) VALUES (null,null)");
+            c.createStatement().execute("INSERT INTO SYNTH_MONSTER (parent_name,lvl) VALUES (null,null)");
         } catch (SQLException e) {}
     }
     public static String selectSynthPropQuery(String synthType,String rank){
@@ -61,15 +61,31 @@ public class DB_dataBaseCreation {
         PreparedStatement ps = c.prepareStatement(
             "INSERT INTO parent_list (p1,lv1,p2,lv2,p3,lv3,p4,lv4) VALUES (?,?,?,?,?,?,?,?)"
         );
-        ps.setString(1, p.get(0));
-        ps.setString(2, lv.get(0));
-        ps.setString(3, p.get(1));
-        ps.setString(4, lv.get(1));
-        ps.setString(5, p.get(2));
-        ps.setString(6, lv.get(2));
-        ps.setString(7, p.get(3));
-        ps.setString(8, lv.get(3));
-        ps.executeUpdate();
+        int ps_slot = 1;
+        for (int i = 0; i < 4; i++) {
+            if (p.get(i) != null) {
+                ps.setString(ps_slot, p.get(i));
+            }
+            else{
+                ps.setNull(ps_slot, java.sql.Types.VARCHAR);
+            }
+            if (lv.get(i) != null) {
+                ps.setString(ps_slot+1, lv.get(i));
+            }
+            else{
+                ps.setNull(ps_slot+1, java.sql.Types.VARCHAR);
+            }
+            ps_slot+=2;
+        }
+        // ps.setString(1, p.get(0));
+        // ps.setString(2, lv.get(0));
+        // ps.setString(3, p.get(1));
+        // ps.setString(4, lv.get(1));
+        // ps.setString(5, p.get(2));
+        // ps.setString(6, lv.get(2));
+        // ps.setString(7, p.get(3));
+        // ps.setString(8, lv.get(3));
+        ps.execute();
     }
     public static String selectParentListQuery(List<String> p,List<String> lv){
         StringBuilder res = new StringBuilder();
@@ -106,10 +122,11 @@ public class DB_dataBaseCreation {
     }
     public static void insertSynth(Connection c,String son,String synthtype,String ranktype){
         try {
-            c.createStatement().executeUpdate(
+            c.createStatement().execute(
                 "INSERT INTO SYNTH (son_name,id_pr) VALUES ('"+son+"',"+selectSynthPropQuery(synthtype, ranktype)+" )"
             );
         } catch (SQLException e) {}
+        
     }
     public static String selectSynthQuery(Connection c, String son,String synthtype,String ranktype){
         return "( SELECT id_s FROM SYNTH WHERE son_name = '"+son+"' and id_pr = "+selectSynthPropQuery(synthtype, ranktype)+" )";
@@ -118,7 +135,7 @@ public class DB_dataBaseCreation {
     public static void insertJoinTableEntry(Connection c,String son,String synthtype,String ranktype,List<String> p,List<String> lv){
         try {
             String s1 = selectSynthQuery(c, son, synthtype, ranktype),s2 = selectParentListQuery(p, lv);
-            c.createStatement().executeUpdate(
+            c.createStatement().execute(
                 "INSERT INTO pl_s(id_s,id_pl) VALUES ("+s1+","+s2+")"
             );
         } catch (SQLException e) {}
@@ -133,9 +150,21 @@ public class DB_dataBaseCreation {
                 PreparedStatement ps = c.prepareStatement(
                     "INSERT INTO synth_monster (parent_name,lvl) VALUES (?,?)"
                 );
-                ps.setString(1, p.get(i));
-                ps.setString(2, lv.get(i));
-                ps.executeUpdate();
+                String parent = p.get(i);
+                if (parent == null) {
+                    ps.setNull(1, java.sql.Types.VARCHAR);
+                }
+                else{
+                    ps.setString(1, parent);
+                }
+                String lvl = lv.get(i);
+                if (lvl == null) {
+                    ps.setNull(2, java.sql.Types.VARCHAR);
+                }
+                else{
+                    ps.setString(2, lvl);
+                }
+                ps.execute();
             }
             catch(Exception e){}
         }
@@ -191,6 +220,6 @@ public class DB_dataBaseCreation {
         c.close();
     }
     public static void main(String[] args) throws SQLException {
-        createDB("~/Documents/game/DQMJ2_synthesis/synth_tree/db/synthesis");
+        createDB("~/Documents/game/DQMJ2_synthesis/dqmj2_synth/db/synthesis");
     }
 }
